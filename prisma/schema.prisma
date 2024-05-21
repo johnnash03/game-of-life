@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Project {
+  id String @id @default(dbgenerated("gen_random_uuid()"))
+  name String
+  projectDetail ProjectDetail[]
+}
+
+model ProjectDetail {
+  id String @id @default(dbgenerated("gen_random_uuid()"))
+  
+  project Project @relation(fields: [projectId], references: [id])
+  projectId String
+
+  progress ProgressType @relation(fields: [progressTypeId], references: [id])
+  progressTypeId Int
+
+  note String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+}
+
+model ProgressType {
+  id Int @id @default(autoincrement())
+  name String
+  points Int
+  projectDetail ProjectDetail[]
+}
+
+model routine {
+  id Int @id @default(autoincrement())
+  name String
+  points Int
+  routinedetail routinedetail[]
+}
+
+model routinedetail {
+  id Int @id @default(autoincrement())
+  routineRel routine @relation(fields: [routineid], references: [id])
+  routineid Int
+  createdat DateTime @default(now()) @db.Date
+  @@unique([routineid, createdat])
+}
+
+model uncomfortabletask {
+  id Int @id @default(autoincrement())
+  name String
+  points Int
+  done Boolean @default(false)
+}
