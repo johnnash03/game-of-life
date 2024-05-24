@@ -2,6 +2,7 @@
 // import { getTodayScore } from "@/utils/api";
 // import { useState, useEffect } from "react";
 import { prisma } from "@/utils/db";
+export const dynamic = "force-dynamic";
 // async function getData() {
 //   const res = await fetch(`http://localhost:3000/api/misc/getTodayScore`);
 //   const data = await res.json();
