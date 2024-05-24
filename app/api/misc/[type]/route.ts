@@ -6,7 +6,7 @@ export async function GET(request: Request) {
   console.log({ pathname });
 
   if (pathname === "/api/misc/gettodayscore") {
-    const data = await prisma.$queryRaw`SELECT
+    const projectData = await prisma.$queryRaw`SELECT
         SUM(pt.points) AS total_points
     FROM
         "ProjectDetail" pd
@@ -15,10 +15,29 @@ export async function GET(request: Request) {
     WHERE
         DATE("pd"."createdAt") = CURRENT_DATE;
 `;
-    console.log("data on server", data, Number(data[0].total_points));
+    const routineData = await prisma.routinedetail.aggregate({
+      _sum: {
+        points: true,
+      },
+      where: {
+        createdat: new Date(),
+      },
+    });
+    const uncomfortableData = await prisma.uncomfortabletask.aggregate({
+      _sum: {
+        points: true,
+      },
+      where: {
+        createdat: new Date(),
+      },
+    });
+    console.log("routineData", routineData, uncomfortableData);
     return NextResponse.json({
       message: "Hello, World!",
-      data: Number(data[0].total_points),
+      data:
+        Number(projectData[0].total_points) +
+        (uncomfortableData._sum.points || 0) +
+        (routineData._sum.points || 0),
     });
   } else if (pathname === "/api/misc/greet") {
     return NextResponse.json({ message: "Greetings!" });

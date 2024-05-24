@@ -53,6 +53,7 @@ model routinedetail {
   id Int @id @default(autoincrement())
   routineRel routine @relation(fields: [routineid], references: [id])
   routineid Int
+  points Int @default(1)
   createdat DateTime @default(now()) @db.Date
   @@unique([routineid, createdat])
 }
@@ -62,4 +63,5 @@ model uncomfortabletask {
   name String
   points Int
   done Boolean @default(false)
+  createdat DateTime @default(now()) @db.Date
 }

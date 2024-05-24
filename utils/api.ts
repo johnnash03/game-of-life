@@ -59,12 +59,11 @@ export const getRoutines = async () => {
   }
 };
 
-export const createRoutineDetail = async (routineId) => {
-  console.log("routineId", routineId);
+export const createRoutineDetail = async (postData) => {
   const res = await fetch(
     new Request(createURL(`/api/routine`), {
       method: "POST",
-      body: JSON.stringify({ routineId }),
+      body: JSON.stringify(postData),
     }),
   );
   // if (res.ok) {
