@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -24,6 +25,9 @@ const Nav = () => {
       </div>
       <div>
         <Link href="/discomfort">Fear</Link>
+      </div>
+      <div>
+        <Link href="/goals">Goals</Link>
       </div>
     </nav>
   );
