@@ -19,6 +19,12 @@ async function getData() {
     WHERE
         DATE("pd"."createdAt") = CURRENT_DATE;
 `;
+
+  const oneThingTasksPoint = await prisma.$queryRaw`
+      SELECT SUM(points) as total_points
+        FROM onethingtasks ott
+        WHERE DATE(ott.updatedat) = CURRENT_DATE and iscomplete=true`;
+  console.log("oneThingTasksPoint", oneThingTasksPoint);
   const routineData = await prisma.routinedetail.aggregate({
     _sum: {
       points: true,
@@ -39,6 +45,7 @@ async function getData() {
   return {
     data:
       Number(projectData[0].total_points) +
+      Number(oneThingTasksPoint[0].total_points) +
       (uncomfortableData._sum.points || 0) +
       (routineData._sum.points || 0),
   };

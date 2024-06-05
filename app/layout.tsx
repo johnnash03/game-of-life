@@ -27,7 +27,7 @@ const Nav = () => {
         <Link href="/discomfort">Fear</Link>
       </div>
       <div>
-        <Link href="/goals">Goals</Link>
+        <Link href="/onething">One thing</Link>
       </div>
     </nav>
   );

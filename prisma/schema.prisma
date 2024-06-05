@@ -65,3 +65,34 @@ model uncomfortabletask {
   done Boolean @default(false)
   createdat DateTime @default(now()) @db.Date
 }
+
+model onething {
+  id Int @id @default(autoincrement())
+  name String
+  isactive Boolean @default(true)
+  strategiesrel onethingstrategies[]
+}
+
+model onethingstrategies {
+  id Int @id @default(autoincrement())
+  name String
+  onethingid Int
+  onething onething @relation(fields: [onethingid], references: [id])
+  tasksrel onethingtasks[]
+  @@index([onethingid])
+}
+
+model onethingtasks {
+  id Int @id @default(autoincrement())
+  name String
+  points Int
+  time Int @default(0)
+  iscomplete Boolean @default(false)
+
+  strategyid Int
+  onethingstrategies onethingstrategies @relation(fields: [strategyid], references: [id])
+  
+  createdat DateTime @default(now())
+  updatedat DateTime @updatedAt
+  @@index([strategyid])
+}
