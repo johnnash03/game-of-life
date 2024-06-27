@@ -2,11 +2,7 @@ import { prisma } from "@/utils/db";
 import { NextResponse } from "next/server";
 import dayjs from "dayjs";
 export const GET = async () => {
-  const allRoutines = await prisma.routine.findMany({
-    include: {
-      routinedetail: true,
-    },
-  });
+  const allRoutines = await prisma.routine.findMany();
 
   const history = await prisma.$queryRaw`
     SELECT t.id, t.routineid, t.createdat, t.points

@@ -55,7 +55,8 @@ model routinedetail {
   routineid Int
   points Int @default(1)
   createdat DateTime @default(now()) @db.Date
-  @@unique([routineid, createdat])
+  // @@unique([routineid, createdat])
+  @@index([routineid, createdat])
 }
 
 model uncomfortabletask {
