@@ -3,6 +3,8 @@
 // import { useState, useEffect } from "react";
 import { prisma } from "@/utils/db";
 export const dynamic = "force-dynamic";
+import smileIcon from "@/public/smile.svg";
+import Image from "next/image";
 // async function getData() {
 //   const res = await fetch(`http://localhost:3000/api/misc/getTodayScore`);
 //   const data = await res.json();
@@ -61,12 +63,21 @@ export default async function Home() {
   // }, []);
   const { data: todaysScore } = await getData();
   return (
-    <main className="flex flex-col items-center">
-      <h3>Your score today is</h3>
-      <div>
-        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-content">
-          {todaysScore}
+    <main className="flex h-full flex-col items-center bg-white px-8 pt-16">
+      <div className="bg-pink h-[150px] w-full rounded-md p-3">
+        <div>
+          <Image
+            src={smileIcon}
+            width={24}
+            height={24}
+            alt="smile"
+            className="m-0"
+          />
         </div>
+        <p className="mt-2 text-2xl font-bold text-black">
+          Your today&apos; score
+        </p>
+        <p className="mt-2 text-4xl font-bold text-white">{todaysScore}</p>
       </div>
     </main>
   );
